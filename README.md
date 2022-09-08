@@ -1,64 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Laravel Api 
 
-## About Laravel
+Requirement 1
+When the endpoint:
+GET /api/external-books?name=:nameOfABook
+is requested, your application should query the Ice And Fire API and use the data received to
+respond with precisely the following JSON structure if there are results;
+        {
+        "status_code":200,
+        "status":"success",
+        "data":[
+        {
+                "name":"A Game of Thrones",
+                "isbn":"978-0553103540",
+                "authors":[
+                "George R. R. Martin"
+                ],
+                "number_of_pages":694,
+                "publisher":"Bantam Books",
+                "country":"United States",
+                "release_date":"1996-08-01"
+        },
+         {
+                "name":"A Clash of Kings",
+                "isbn":"978-0553108033",
+                "authors":[
+                "George R. R. Martin"
+                ],
+                "number_of_pages":768,
+                "publisher":"Bantam Books",
+                "country":"United States",
+                "release_date":"1999-02-02"
+            }
+       ]
+            }
+            Or precisely this JSON structure if the Books API returns no results;
+            {
+        "status_code":404,
+        "Status":"not found",
+        "data":[]
+        }
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Requirement 2
+POST /api/v1/create
+ is requested with the following data to create books
+        ● name
+        ● isbn
+        ● authors
+        ● country
+        ● number_of_pages
+        ● publisher
+        ● release_date
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+passing them has form data in postman
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Requirement 3
+GET /api/v1/Get_book
 
-## Learning Laravel
+is requested, your solution will return a list of books from the local database and can also search 
+using name (string), country (string), publisher (string) and
+release date (year, integer).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+To search 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+GET /api/v1/Get_book/"value to search"
 
-## Laravel Sponsors
+example
+/api/v1/Get_book/Gameofthrone
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+Requirement 3
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+PATCH /api/v1/books/:id
 
-## Contributing
+post variable has body( json on postman ) to update table record
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+● name
+● isbn
+● authors
+● country
+● number_of_pages
+● publisher
+● release_date
 
-## Code of Conduct
+Requirement 3
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+DELETE /api/v1/books/id
 
-## Security Vulnerabilities
+Or
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+POST /api/v1/books/:id/delete
+is requested with a specific :id in the URL to delete record from database
 
-## License
+Response sample
+{
+"status_code":204,
+"status":"success",
+"message":"The book ‘My first book’ was deleted successfully",
+"data":[]
+}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Requirement 4 
+
+GET /api/v1/books/:id
+is requested with a specific :id in the URL. it should show the specific book
+
+resonse
+
+{
+    "status_code":200,
+    "status":"success",
+    "data":{
+    "id":1,
+    "name":"My First Book",
+    "isbn":"123-3213243567",
+    "authors":[
+        "John Doe"
+        ],
+    "number_of_pages":350,
+    "publisher":"Acme Books Publishing",
+    "country":"United States",
+    "release_date":"2019-01-01"
+    }
+}

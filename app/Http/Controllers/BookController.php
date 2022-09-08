@@ -240,6 +240,42 @@ class BookController extends Controller
                 }
             echo json_encode($response);
             }
+
+            public function Delete_books(Request $request, $id){
+                $response= array();
+                $res=$request->id;
+                
+                $result=DB::table('book')->select('*')->where('id',$id)->get();
+
+                if(empty($record[0])){
+                    $response =[
+                        'status_code' => '404',
+                        'status' => "not found",
+                        'data'=>[]
+                    ];
+                }else{
+                    $book_deleted = Book::where('id', $id)->delete();
+                    if(!$book_deleted){
+                        $response =[
+                            'status_code' => '404',
+                            'status' => $result[0]->name."  not deleted",
+                            'data'=>[]
+                        
+                        ];
+                    }else{
+                        $response =[
+                            'status_code' => '204',
+                            'status' => $result[0]->name." has been deleted successfully",
+                            'data'=>[]
+                        
+                        ];
+                    }
+                
+               
+                }
+            echo json_encode($response);
+            }
+
             public function Show($id){
                 $response= array();
                 $result=DB::table('book')->select('*')->where('id',$id)->get();
