@@ -6,7 +6,10 @@ After cloning the file update your PHP version to PHP 7.4 or later.
 
 -- run command "composer run post-create-project-cmd" (This sets the APP_KEY value in your .env file)
 
--- update the .env file with your DB configuration
+-- update the .env file with your DB configuration and App url
+
+APP_URL=http://localhost
+
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
