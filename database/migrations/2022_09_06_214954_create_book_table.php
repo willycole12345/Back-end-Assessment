@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('isbn', 128)->nullable()->index();
+            $table->string('authors', 100)->nullable()->index();
             $table->string('country', 100)->nullable()->index();
-            $table->string('number_of_page', 100)->nullable()->index();
+            $table->bigInteger('number_of_page')->nullable()->index();
             $table->string('publisher', 100)->nullable()->index();
             $table->string('release_date', 100)->nullable()->index();
             $table->timestamps();
