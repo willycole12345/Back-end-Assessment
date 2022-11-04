@@ -64,7 +64,10 @@ class BookController extends Controller
     {
         $response = array();
        // dd($request);
-        if (empty($resquest)){
+        if (
+            empty($request->name) || empty($request->isbn) || empty($request->authors) || empty($request->number_of_page)
+            || empty($request->publisher) || empty($request->country) || empty($request->release_date)
+        ) {
                 
             $response = [
                 'status_code' => '404',
